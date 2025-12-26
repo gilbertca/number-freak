@@ -26,4 +26,11 @@ impl Character {
     pub fn get_name(&self) -> &str {
         self.body.name.as_str()
     }
+
+    /// Rolls all three of a `Character`'s dice a given number of times
+    pub fn roll_for_duel(&mut self, num_rolls: usize) -> (Vec<usize>, Vec<usize>, Vec<usize>,) {
+        (self.weapon.roll(num_rolls)
+         self
+         self)
+    }
 }

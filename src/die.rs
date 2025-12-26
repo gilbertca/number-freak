@@ -45,7 +45,16 @@ impl<R: Rng> Die<R> {
     pub fn destroy_face(&mut self,
     face_index: usize,)
     -> () {
-        self.face_values[face_index] = None;
+        self.modify_face(face_index, None);
+        ()
+    }
+
+    /// Helper method to restore a face to default.
+    /// Calls `modify_face` internally.
+    pub fn restore_face(&mut self,
+    face_index: usize,)
+    -> () {
+        self.modify_face(face_index, face_index+1);
         ()
     }
 }
