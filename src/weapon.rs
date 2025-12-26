@@ -3,7 +3,8 @@ use dice::Die;
 
 pub struct Weapon {
     name: String,
-    die: Die
+    die: Die,
+    ruined: bool
 }
 
 impl Weapon {

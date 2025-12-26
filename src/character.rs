@@ -29,8 +29,16 @@ impl Character {
 
     /// Rolls all three of a `Character`'s dice a given number of times
     pub fn roll_for_duel(&mut self, num_rolls: usize) -> (Vec<usize>, Vec<usize>, Vec<usize>,) {
-        (self.weapon.roll(num_rolls)
-         self
-         self)
+        let weapon_rolls = match weapon {
+            None => vec![0;num_rolls],
+            Some(weapon_die) => weapon_die.roll(num_rolls)
+        }
+        let armor_rolls = match armor {
+            None => vec![0;num_rolls],
+            Some(armor_die) => armor_die.roll(num_rolls)
+        }
+        let body_rolls = Some(body_die) => body_die.roll(num_rolls)
+
+        (weapon_rolls, armor_rolls, body_rolls)
     }
 }
