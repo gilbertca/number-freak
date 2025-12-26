@@ -22,7 +22,7 @@ impl<R: Rng> Die<R> {
         let mut results: Vec<usize> = vec![0;num_rolls];
         for n in 0..num_rolls {
             let random_value: usize = self.rng.random_range(0..self.num_faces);
-            // Replace value at index with face value, or 0 (for now)
+            // Replace value at index with face value, or 0 for 'None' faces
             results[n] = match self.face_values[random_value] {
                 Some(face_value) => face_value,
                 None => 0
