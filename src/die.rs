@@ -1,16 +1,16 @@
-use rand::Rng;
+use rand::{Rng, RngCore};
 
-pub struct Die<R> {
-    rng: R,
+pub struct Die {
+    rng: Box<dyn RngCore>,
     num_faces: usize,
     face_values: Vec<Option<usize>>,
 }
 
-impl<R: Rng> Die<R> {
+impl Die {
     /// Creates a new instance of a `Die`.
     /// The RNG **MUST** be seeded before initialization.
-    pub fn new(num_faces: usize, seeded_rng: R) -> Die<R> {
-        Die { rng: seeded_rng,
+    pub fn new(num_faces: usize, seeded_rng: Box<dyn RngCore>) -> Die {
+        Die { rng: Box::new(seeded_rng),
             num_faces: num_faces,
             face_values: (1..=num_faces).map(Some).collect()
         }
@@ -54,7 +54,7 @@ impl<R: Rng> Die<R> {
     pub fn restore_face(&mut self,
     face_index: usize,)
     -> () {
-        self.modify_face(face_index, face_index+1);
+        self.modify_face(face_index, Some(face_index+1));
         ()
     }
 }

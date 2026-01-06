@@ -1,11 +1,6 @@
-mod weapon;
-use weapon::Weapon;
-
-mod armor;
-use armor::Armor;
-
-mod body;
-use body::Body;
+use crate::weapon::Weapon;
+use crate::armor::Armor;
+use crate::body::Body;
 
 pub struct Character {
     weapon: Option<Weapon>,
@@ -24,20 +19,20 @@ impl Character {
 
     /// Retrieves a `Character`'s name
     pub fn get_name(&self) -> &str {
-        self.body.name.as_str()
+        self.body.get_name()
     }
 
     /// Rolls all three of a `Character`'s dice a given number of times
     pub fn roll_for_duel(&mut self, num_rolls: usize) -> (Vec<usize>, Vec<usize>, Vec<usize>,) {
-        let weapon_rolls = match weapon {
+        let weapon_rolls = match &mut self.weapon {
             None => vec![0;num_rolls],
             Some(weapon_die) => weapon_die.roll(num_rolls)
-        }
-        let armor_rolls = match armor {
+        };
+        let armor_rolls = match &mut self.armor {
             None => vec![0;num_rolls],
             Some(armor_die) => armor_die.roll(num_rolls)
-        }
-        let body_rolls = Some(body_die) => body_die.roll(num_rolls)
+        };
+        let body_rolls = self.body.roll(num_rolls);
 
         (weapon_rolls, armor_rolls, body_rolls)
     }

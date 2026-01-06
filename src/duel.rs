@@ -1,5 +1,4 @@
-mod character;
-use character::Character;
+use crate::character::Character;
 
 /// Duelling is a multi-step process. 
 ///
@@ -69,5 +68,6 @@ use character::Character;
 /// It is possible for two Characters to simultaneously kill each other.
 pub fn duel(character1: Character,
 character2: Character,
-number_of_turns: usize) {
+number_of_turns: usize) -> (){
+    ()
 }
