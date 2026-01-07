@@ -1,5 +1,6 @@
 use crate::character::Character;
 
+#[derive(Clone)]
 pub enum DuelResult {
     WeaponDamaged,
     ArmorDamaged,
@@ -29,22 +30,26 @@ number_of_turns: usize)
         let body_rolls = [rolls[0][2].clone(), rolls[1][2].clone()];
 
         // Process targets of effects individually
-        // Attack 1
+        // Character 1 combat
         for (index, weapon_roll) in weapon_rolls[0].iter().enumerate() {
             if *weapon_roll > armor_rolls[1][index] { // Success
                 if armor_rolls[1][index] == 0 { // If armor is broken
                     if *weapon_roll > body_rolls[1][index] { // Hit body
                         if body_rolls[1][index] == 0 { // Dead
+                            // Side-effect of `resize` *should* fill
+                            // empty slots in `results` without
+                            // affecting pre-filled slots
                             results.resize(
                                 number_of_turns,
                                 DuelResult::Victory(1)
-                            )
-                            return ();
+                            );
+                            return results; // Duel over - early return
                         }
                     }
                 }
             }
         }
-        // Attack 1 end
     }
+    
+    results
 }
