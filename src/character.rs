@@ -23,17 +23,17 @@ impl Character {
     }
 
     /// Rolls all three of a `Character`'s dice a given number of times
-    pub fn roll_for_duel(&mut self, num_rolls: usize) -> (Vec<usize>, Vec<usize>, Vec<usize>,) {
+    pub fn roll_for_duel(&mut self, num_rolls: usize) -> Vec<Vec<usize>> {
+        // Body rolls happen first so they can replace others
+        let body_rolls = self.body.roll(num_rolls);
         let weapon_rolls = match &mut self.weapon {
-            None => vec![0;num_rolls],
+            None => body_rolls.clone(),
             Some(weapon_die) => weapon_die.roll(num_rolls)
         };
         let armor_rolls = match &mut self.armor {
-            None => vec![0;num_rolls],
+            None => body_rolls.clone(),
             Some(armor_die) => armor_die.roll(num_rolls)
         };
-        let body_rolls = self.body.roll(num_rolls);
-
-        (weapon_rolls, armor_rolls, body_rolls)
+        vec![weapon_rolls, armor_rolls, body_rolls]
     }
 }
